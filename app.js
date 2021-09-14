@@ -1,10 +1,13 @@
-var commandLineArg=process.argv;
-console.log(commandLineArg);
-var profileDataArgs = process.argv.slice(2, process.argv.length)
+const fs = require('fs');
+const generatePage=module.require('./src/page-template.js')
 
-//ES6 function 
-const printProfileData=(profileDataArg)=>{
-  console.log(profileDataArg);
-}
+const profileDataArgs = process.argv.slice(2);
 
-printProfileData(profileDataArgs);
+const [name, github] = profileDataArgs;
+
+
+fs.writeFile('./index.html', generatePage(name, github), err => {
+  if (err) throw new Error(err);
+
+  console.log('Portfolio complete! Check out index.html to see the output!');
+});
